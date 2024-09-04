@@ -1,7 +1,5 @@
-import ObjectId from "./ObjectId";
-
 type DataObject = {
-  id: ObjectId;
+  id: string;
   name: string;
   author_ip: string;
 }
