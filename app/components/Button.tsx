@@ -1,0 +1,26 @@
+"use client"
+
+import { mergeCss } from "@/utils/mergeCss";
+
+export type OnClickAction = (event: any) => void;
+
+export default function Button(props: {
+  children: string | JSX.Element | JSX.Element[];
+  className?: string;
+  disabled?: boolean;
+  onClick?: OnClickAction;
+}) {
+  console.log(typeof props.children);
+
+  return (
+    <button
+      className={mergeCss("p-3 rounded-lg", props.className, props.disabled ? "bg-slate-200" : "bg-slate-300")}
+      disabled={props.disabled}
+      onClick={(e) => {
+        if (props.onClick) props.onClick(e);
+      }}
+    >
+      {props.children}
+    </button>
+  );
+}
