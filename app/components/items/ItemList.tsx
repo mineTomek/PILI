@@ -106,10 +106,7 @@ export default function ItemList() {
       <Button
         onClick={async () => {
           const newItem: Item = {
-            name: "Test",
-            category: "Tests",
-            storage_id: "0",
-            description: "Test description",
+            name: "Unnamed",
           };
 
           const response = await fetch("/api/items/add", {
