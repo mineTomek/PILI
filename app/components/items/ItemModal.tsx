@@ -10,10 +10,13 @@ import {
   faEdit,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 export default function ItemModal(props: { item: Item }) {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const [item, setItem] = useState<Item>(props.item);
 
@@ -126,9 +129,10 @@ export default function ItemModal(props: { item: Item }) {
         )}
         <Button
           className="size-8 flex justify-center items-center"
-          onClick={(_) =>
-            fetch(`/api/items/delete/${item.id}`, { method: "DELETE" })
-          }
+          onClick={(_) => {
+            fetch(`/api/items/delete/${item.id}`, { method: "DELETE" });
+            router.push("/");
+          }}
         >
           <FontAwesomeIcon icon={faTrashCan} />
         </Button>
