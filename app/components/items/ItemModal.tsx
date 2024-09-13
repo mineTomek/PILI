@@ -99,6 +99,9 @@ export default function ItemModal(props: { item: Item }) {
       <span className="text-slate-400 text-sm font-light">
         Item ID: {item.id}
       </span>
+      <span className="text-slate-400 text-sm font-light">
+        Author ID: {item.id}
+      </span>
 
       <div className="absolute top-2 right-2 flex gap-2">
         {editMode && (
