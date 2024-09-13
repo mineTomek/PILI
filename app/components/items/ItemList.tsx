@@ -5,6 +5,8 @@ import Button from "../Button";
 import { useRouter } from "next/navigation";
 import Loading from "../Loading";
 import Item from "@/utils/structures/Item";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClone, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function ItemList() {
   const [items, setItems] = useState<Item[]>([]);
@@ -35,6 +37,7 @@ export default function ItemList() {
             <th className="p-2 border-b">Name</th>
             <th className="p-2 border-b">Category</th>
             <th className="p-2 border-b">Storage</th>
+            <th className="p-2 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +54,45 @@ export default function ItemList() {
               </td>
               <td className="p-2">{item.category}</td>
               <td className="p-2">{item.storage_id}</td>
+              <td className="p-2 flex justify-center gap-2">
+                <Button
+                  className="size-8 flex justify-center items-center"
+                  onClick={async () => {
+                    const response = await fetch(
+                      `/api/items/delete/${item.id}`,
+                      { method: "DELETE" }
+                    );
+
+                    if (response.ok) {
+                      loadItems();
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </Button>
+                <Button
+                  className="size-8 flex justify-center items-center"
+                  onClick={async () => {
+                    const clonedItem: Item = {
+                      name: item.name,
+                      category: item.category,
+                      storage_id: item.storage_id,
+                      description: item.description,
+                    };
+                    const response = await fetch("/api/items/add", {
+                      method: "POST",
+                      body: JSON.stringify(clonedItem),
+                      headers: { "Content-Type": "application/json" },
+                    });
+
+                    if (response.ok) {
+                      loadItems();
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faClone} />
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
