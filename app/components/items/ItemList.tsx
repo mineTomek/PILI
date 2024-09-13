@@ -34,7 +34,7 @@ export default function ItemList() {
     <div className="w-full flex flex-col items-center">
       <table className={mergeCss("w-full", items.length > 0 && "mb-6")}>
         <thead>
-          <tr>
+          <tr className="divide-x divide-slate-100">
             <th className="p-2 border-b">Name</th>
             <th className="p-2 border-b">Category</th>
             <th className="p-2 border-b">Storage</th>
