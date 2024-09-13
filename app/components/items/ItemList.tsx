@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Loading from "../Loading";
 import Item from "@/utils/structures/Item";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClone, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faClone, faEye, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { mergeCss } from "@/utils/mergeCss";
 
 export default function ItemList() {
@@ -47,12 +47,7 @@ export default function ItemList() {
               key={item.id}
               className="even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"
             >
-              <td
-                className="p-2 cursor-pointer"
-                onClick={() => router.push(`/item/${item.id}`)}
-              >
-                {item.name}
-              </td>
+              <td className="p-2">{item.name}</td>
               <td className="p-2">{item.category}</td>
               <td className="p-2">{item.storage_id}</td>
               <td className="p-2 flex justify-center gap-2">
@@ -71,6 +66,7 @@ export default function ItemList() {
                 >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </Button>
+
                 <Button
                   className="size-8 flex justify-center items-center"
                   onClick={async () => {
@@ -92,6 +88,13 @@ export default function ItemList() {
                   }}
                 >
                   <FontAwesomeIcon icon={faClone} />
+                </Button>
+
+                <Button
+                  className="size-8 flex justify-center items-center"
+                  onClick={() => router.push(`/item/${item.id}`)}
+                >
+                  <FontAwesomeIcon icon={faEye} />
                 </Button>
               </td>
             </tr>
