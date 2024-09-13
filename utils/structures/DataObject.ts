@@ -1,7 +1,7 @@
 type DataObject = {
-  id: string;
+  id?: string;
   name: string;
-  author_id: string;
+  author_id?: string;
 }
 
 export default DataObject
