@@ -17,7 +17,7 @@ export default function ItemList() {
   const loadItems = async () => {
     setLoading(true);
     const response = await fetch("/api/items/get");
-    const loadedItems: Item[] = await response.json();
+    const loadedItems: Item[] = (await response.json()).items;
     setItems(loadedItems);
     setLoading(false);
   };

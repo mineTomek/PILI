@@ -18,7 +18,7 @@ export default function ItemPage({ params }: { params: { id: string } }) {
     const loadItem = async () => {
       setLoading(true);
       const response = await fetch(`/api/items/get/${params.id}`);
-      const loadedItem: Item = await response.json();
+      const loadedItem: Item = (await response.json()).item;
       setItem(loadedItem);
       setLoading(false);
     };
