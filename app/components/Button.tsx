@@ -10,8 +10,6 @@ export default function Button(props: {
   disabled?: boolean;
   onClick?: OnClickAction;
 }) {
-  console.log(typeof props.children);
-
   return (
     <button
       className={mergeCss("p-3 rounded-lg", props.className, props.disabled ? "bg-slate-200" : "bg-slate-300")}

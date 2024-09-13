@@ -39,7 +39,6 @@ export default function ItemList() {
         </thead>
         <tbody>
           {items.map((item) => (
-            // <Link href={`/item/${item.id}`} key={item.id} className="table-row align-[inherit] indent-0">
             <tr
               key={item.id}
               className="cursor-pointer even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"

@@ -35,7 +35,6 @@ export async function POST(request: NextRequest) {
   const data = fs.readFileSync(filePath, "utf8");
   const items: Item[] = JSON.parse(data);
 
-  // If no ID is provided, generate a new UUID
   if (!newItem.id) {
     newItem.id = uuid();
   }
