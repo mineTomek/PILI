@@ -11,15 +11,15 @@ export default function ItemList() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  useEffect(() => {
-    const loadItems = async () => {
-      setLoading(true);
-      const response = await fetch("/api/items/get");
-      const loadedItems: Item[] = await response.json();
-      setItems(loadedItems);
-      setLoading(false);
-    };
+  const loadItems = async () => {
+    setLoading(true);
+    const response = await fetch("/api/items/get");
+    const loadedItems: Item[] = await response.json();
+    setItems(loadedItems);
+    setLoading(false);
+  };
 
+  useEffect(() => {
     loadItems();
   }, []);
 
@@ -53,12 +53,23 @@ export default function ItemList() {
       </table>
 
       <Button
-        onClick={(_) => {
-          fetch("/api/items/add", {
+        onClick={async () => {
+          const newItem: Item = {
+            name: "Test",
+            category: "Tests",
+            storage_id: "0",
+            description: "Test description",
+          };
+
+          const response = await fetch("/api/items/add", {
             method: "POST",
-            body: '{"name": "Test", "category": "Tests", "storage_id": "0"}',
+            body: JSON.stringify(newItem),
+            headers: { "Content-Type": "application/json" },
           });
-          router.refresh();
+
+          if (response.ok) {
+            loadItems();
+          }
         }}
       >
         Add Item
