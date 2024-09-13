@@ -8,5 +8,5 @@ export async function GET() {
   const data = fs.readFileSync(filePath, "utf8");
   const items: Item[] = JSON.parse(data);
   
-  return NextResponse.json(items);
+  return NextResponse.json({items});
 }

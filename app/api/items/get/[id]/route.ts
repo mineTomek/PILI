@@ -14,7 +14,7 @@ export async function GET(
   const item = items.find((i) => i.id === params.id);
 
   if (item) {
-    return NextResponse.json(item);
+    return NextResponse.json({item});
   } else {
     return NextResponse.json({ message: "Item not found" }, { status: 404 });
   }
