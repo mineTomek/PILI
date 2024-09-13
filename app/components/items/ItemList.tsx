@@ -31,7 +31,7 @@ export default function ItemList() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <table className="w-full mb-6">
+      <table className={mergeCss("w-full", items.length > 0 && "mb-6")}>
         <thead>
           <tr>
             <th className="p-2 border-b">Name</th>
@@ -97,6 +97,10 @@ export default function ItemList() {
           ))}
         </tbody>
       </table>
+
+      {items.length == 0 && (
+        <div className="p-2 flex justify-center mb-6">No Items</div>
+      )}
 
       <Button
         onClick={async () => {
