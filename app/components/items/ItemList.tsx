@@ -41,10 +41,14 @@ export default function ItemList() {
           {items.map((item) => (
             <tr
               key={item.id}
-              className="cursor-pointer even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"
-              onClick={e => router.push(`/item/${item.id}`)}
+              className="even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"
             >
-              <td className="p-2">{item.name}</td>
+              <td
+                className="p-2 cursor-pointer"
+                onClick={() => router.push(`/item/${item.id}`)}
+              >
+                {item.name}
+              </td>
               <td className="p-2">{item.category}</td>
               <td className="p-2">{item.storage_id}</td>
             </tr>
