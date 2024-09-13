@@ -7,6 +7,7 @@ import Loading from "../Loading";
 import Item from "@/utils/structures/Item";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClone, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { mergeCss } from "@/utils/mergeCss";
 
 export default function ItemList() {
   const [items, setItems] = useState<Item[]>([]);
