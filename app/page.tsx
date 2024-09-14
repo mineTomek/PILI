@@ -1,12 +1,46 @@
+"use client";
+
+import { useState } from "react";
 import ItemList from "./components/items/ItemList";
 import Navbar from "./components/Navbar";
+import Button from "./components/Button";
+import StorageList from "./components/storages/StorageList";
 
 export default function Home() {
+  const [currentView, setCurrentView] = useState("items");
+
   return (
     <main>
       <Navbar />
       <div className="flex flex-col gap-6 justify-center items-center mt-12 h-[calc(100dvh-3rem)] px-10">
-        <ItemList />
+        <div className="bg-slate-300 p-3 rounded-[20px] flex gap-3 shadow-md">
+          <Button className="bg-white" onClick={() => setCurrentView("items")}>
+            Items
+          </Button>
+          <Button
+            className="bg-white"
+            onClick={() => setCurrentView("storages")}
+          >
+            Storages
+          </Button>
+          <Button
+            className="bg-white"
+            onClick={() => setCurrentView("rooms")}
+            disabled
+          >
+            Rooms
+          </Button>
+          <Button
+            className="bg-white"
+            onClick={() => setCurrentView("houses")}
+            disabled
+          >
+            Houses
+          </Button>
+        </div>
+
+        {currentView === "items" && <ItemList />}
+        {currentView === "storages" && <StorageList />}
       </div>
     </main>
   );
