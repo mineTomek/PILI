@@ -12,7 +12,10 @@ export default function Button(props: {
 }) {
   return (
     <button
-      className={mergeCss("p-3 rounded-lg", props.className, props.disabled ? "bg-slate-200" : "bg-slate-300")}
+      className={mergeCss(
+        "p-3 rounded-lg shadow-sm disabled:text-slate-700 bg-slate-300 disabled:bg-slate-200",
+        props.className
+      )}
       disabled={props.disabled}
       onClick={(e) => {
         if (props.onClick) props.onClick(e);
