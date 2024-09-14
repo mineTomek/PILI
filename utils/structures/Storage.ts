@@ -2,7 +2,7 @@ import DataObject from "./DataObject";
 
 type Storage = DataObject & {
   room_id?: string;
-  type?: "desk" | "shelf" | "drawer" | "other";
+  type?: string,
   group?: string;
   level?: number;
   surfacePosition?: {
