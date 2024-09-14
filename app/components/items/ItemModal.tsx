@@ -100,7 +100,10 @@ export default function ItemModal(props: { item: Item }) {
         Item ID: {item.id}
       </span>
       <span className="text-slate-400 text-sm font-light">
-        Author ID: {item.id}
+        Author ID: {item.author_id}
+      </span>
+      <span className="text-slate-400 text-sm font-light">
+        Author Session Name: {item.author_session_name}
       </span>
 
       <div className="absolute top-2 right-2 flex gap-2">
