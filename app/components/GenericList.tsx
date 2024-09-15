@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TableList, { Action, TableColumn } from "./TableList";
 import Loading from "./Loading";
 import Button from "./Button";
@@ -13,17 +13,17 @@ export default function GenericList<T>(props: {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     const response = await fetch(`/api/${props.dataType}/get`);
     const loadedData: T[] = (await response.json()).items;
     setData(loadedData);
     setLoading(false);
-  };
+  }, [props.dataType]);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   if (loading) {
     return <Loading />;
