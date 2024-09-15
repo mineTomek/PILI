@@ -25,7 +25,9 @@ export default function TableList<T>(props: {
       <thead>
         <tr className="divide-x divide-slate-100">
           {props.columns.map((column) => (
-            <th className="p-2 border-b">{column.name}</th>
+            <th key={`header-${column.name}`} className="p-2 border-b">
+              {column.name}
+            </th>
           ))}
           <th className="p-2 border-b">Actions</th>
         </tr>
@@ -36,17 +38,25 @@ export default function TableList<T>(props: {
             key={props.keyAccessor(obj)}
             className="even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"
           >
-            {props.columns.map((column) => 
-            <td className="p-2">{column.accessor(obj)}</td>)}
-            
-            <td className="p-2 flex justify-center gap-2">
-
-              {props.actions.map(action => <Button
-                className="size-8 flex justify-center items-center"
-                onClick={_ => action.action(obj)}
+            {props.columns.map((column) => (
+              <td
+                key={`cell-${column.name}-${props.keyAccessor(obj)}`}
+                className="p-2"
               >
-                <FontAwesomeIcon icon={action.icon} />
-              </Button>)}
+                {column.accessor(obj)}
+              </td>
+            ))}
+
+            <td className="p-2 flex justify-center gap-2">
+              {props.actions.map((action) => (
+                <Button
+                  key={`action-${action.icon.toString()}-${props.keyAccessor(obj)}`}
+                  className="size-8 flex justify-center items-center"
+                  onClick={(_) => action.action(obj)}
+                >
+                  <FontAwesomeIcon icon={action.icon} />
+                </Button>
+              ))}
             </td>
           </tr>
         ))}
