@@ -1,11 +1,11 @@
 import { v4 as uuid } from "uuid";
 import fs from "fs";
 import path from "path";
-import Item from "@/utils/structures/Item";
+import DataObject from "@/utils/structures/DataObject";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
-  let newItem: Item;
+export async function POST(request: NextRequest, { params }: { params: { type: string } }) {
+  let newItem: DataObject;
 
   try {
     newItem = await request.json();
@@ -31,9 +31,9 @@ export async function POST(request: NextRequest) {
 
   newItem.author_id = deviceToken;
 
-  const filePath = path.join("data", "items.json");
+  const filePath = path.join("data", `${params.type}.json`);
   const data = fs.readFileSync(filePath, "utf8");
-  const items: Item[] = JSON.parse(data);
+  const items: DataObject[] = JSON.parse(data);
 
   if (!newItem.id) {
     newItem.id = uuid();
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   const existingItem = items.find((item) => item.id === newItem.id);
   if (existingItem) {
     return NextResponse.json({
-      message: "Item with this ID already exists",
+      message: "Object with this ID already exists",
       newItem,
     });
   }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   fs.writeFileSync(filePath, JSON.stringify(items, null, 2), "utf8");
 
   const response = NextResponse.json({
-    message: "Item added successfully",
+    message: "Object added successfully",
     newItem,
   });
   response.cookies.set("device-token", deviceToken, {

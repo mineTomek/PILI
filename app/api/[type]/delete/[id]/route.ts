@@ -1,15 +1,15 @@
 import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import Item from "../../../../../utils/structures/Item";
+import DataObject from "@/utils/structures/DataObject";
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { type: string, id: string } }
 ) {
-  const filePath = path.join("data", "items.json");
+  const filePath = path.join("data", `${params.type}.json`);
   const data = fs.readFileSync(filePath, "utf8");
-  let items: Item[] = JSON.parse(data);
+  let items: DataObject[] = JSON.parse(data);
 
   const itemIndex = items.findIndex((i) => i.id === params.id);
 
@@ -17,10 +17,10 @@ export async function DELETE(
     const removedItem = items.splice(itemIndex, 1);
     fs.writeFileSync(filePath, JSON.stringify(items, null, 2), "utf8");
     return NextResponse.json({
-      message: "Item removed successfully",
+      message: "Object removed successfully",
       item: removedItem,
     });
   } else {
-    return NextResponse.json({ message: "Item not found" }, { status: 404 });
+    return NextResponse.json({ message: "Object not found" }, { status: 404 });
   }
 }

@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import Item from "@/utils/structures/Item";
+import DataObject from "@/utils/structures/DataObject";
 import Session from "@/utils/structures/Session";
 
-export async function GET(_request: Request, { params }: { params: { id: string } }) {
-  const itemsFilePath = path.join(process.cwd(), "data", "items.json");
+export async function GET(_request: Request, { params }: { params: { type: string, id: string } }) {
+  const itemsFilePath = path.join(process.cwd(), "data", `${params.type}.json`);
   const itemsData = fs.readFileSync(itemsFilePath, "utf8");
-  const items: Item[] = JSON.parse(itemsData);
+  const items: DataObject[] = JSON.parse(itemsData);
   const item = items.find((i) => i.id === params.id);
 
   if (item) {
@@ -22,6 +22,6 @@ export async function GET(_request: Request, { params }: { params: { id: string 
 
     return NextResponse.json({ item });
   } else {
-    return NextResponse.json({ message: "Item not found" }, { status: 404 });
+    return NextResponse.json({ message: "Object not found" }, { status: 404 });
   }
 }
