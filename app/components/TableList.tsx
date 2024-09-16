@@ -49,9 +49,9 @@ export default function TableList<T>(props: {
             ))}
 
             <td className="p-2 flex justify-center gap-2">
-              {props.actions.map((action) => (
+              {props.actions.map((action, index) => (
                 <Button
-                  key={`action-${action.icon.toString()}-${props.keyAccessor(obj)}`}
+                  key={`action-${index}-${props.keyAccessor(obj)}`}
                   className="size-8 flex justify-center items-center"
                   onClick={(_) => action.action(obj)}
                 >
