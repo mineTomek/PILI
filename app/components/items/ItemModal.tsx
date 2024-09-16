@@ -25,7 +25,12 @@ export default function ItemModal(props: { item: Item }) {
       name: "description",
       type: "textarea",
       accessor: (item) => item.description,
-    }
+    },
+    {
+      name: "storage_id",
+      type: "text", // TODO: Something more specific here
+      accessor: (item) => item.storage_id,
+    },
   ];
   
   return (
