@@ -59,6 +59,7 @@ export default function ItemList() {
           action: (item) => router.push(`/item/${item.id}`),
         },
       ]}
+      sortingFn={(a, b) => (b.creation_time ?? 0) - (a.creation_time ?? 0)}
     />
   );
 }

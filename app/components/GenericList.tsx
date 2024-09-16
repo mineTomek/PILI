@@ -9,6 +9,7 @@ export default function GenericList<T>(props: {
   keyAccessor: (obj: T) => string;
   defaultNewItem: Partial<T>;
   actions: (loadData: () => void) => Action<T>[];
+  sortingFn?: ((a: T, b: T) => number);
 }) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,6 +37,7 @@ export default function GenericList<T>(props: {
         keyAccessor={props.keyAccessor}
         data={data}
         actions={props.actions(loadData)}
+        sortingFn={props.sortingFn}
       />
 
       {data.length === 0 && (

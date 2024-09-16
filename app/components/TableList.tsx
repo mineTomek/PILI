@@ -18,7 +18,8 @@ export default function TableList<T>(props: {
   keyAccessor: (obj: T) => Key;
   data: T[];
   emptyMessage?: string;
-  actions: Action<T>[]
+  actions: Action<T>[];
+  sortingFn?: ((a: T, b: T) => number);
 }) {
   return (
     <table className={"w-full mb-6"}>
@@ -33,7 +34,7 @@ export default function TableList<T>(props: {
         </tr>
       </thead>
       <tbody>
-        {props.data.map((obj) => (
+        {props.data.sort(props.sortingFn).map((obj) => (
           <tr
             key={props.keyAccessor(obj)}
             className="even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"

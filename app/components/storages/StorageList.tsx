@@ -55,6 +55,7 @@ export default function StorageList() {
           action: (storage) => router.push(`/storage/${storage.id}`),
         },
       ]}
+      sortingFn={(a, b) => (b.creation_time ?? 0) - (a.creation_time ?? 0)}
     />
   );
 }
