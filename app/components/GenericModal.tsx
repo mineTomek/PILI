@@ -80,7 +80,12 @@ export default function GenericModal<T extends DataObject>(props: {
                 )}
                 onChange={handleChange}
                 defaultValue={prop.accessor(item)}
-                placeholder={prop.placeholder}
+                placeholder={
+                  prop.placeholder ??
+                  `${prop.name[0].toUpperCase()}${prop.name
+                    .slice(1)
+                    .toLowerCase()}...`
+                }
               />
             ) : (
               <input
@@ -94,7 +99,12 @@ export default function GenericModal<T extends DataObject>(props: {
                 )}
                 onChange={handleChange}
                 defaultValue={prop.accessor(item)}
-                placeholder={prop.placeholder}
+                placeholder={
+                  prop.placeholder ??
+                  `${prop.name[0].toUpperCase()}${prop.name
+                    .slice(1)
+                    .toLowerCase()}...`
+                }
               />
             );
           })}
