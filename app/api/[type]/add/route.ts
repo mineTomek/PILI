@@ -3,8 +3,13 @@ import fs from "fs";
 import path from "path";
 import DataObject from "@/utils/structures/DataObject";
 import { NextRequest, NextResponse } from "next/server";
+import { allowedTypes } from "@/utils/allowedDataTypes";
 
 export async function POST(request: NextRequest, { params }: { params: { type: string } }) {
+  if (!allowedTypes.includes(params.type)) {
+    return NextResponse.json({ message: "Invalid type" }, { status: 400 });
+  }
+
   let newItem: DataObject;
 
   try {

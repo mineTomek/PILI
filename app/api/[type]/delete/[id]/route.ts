@@ -2,11 +2,16 @@ import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 import DataObject from "@/utils/structures/DataObject";
+import { allowedTypes } from "@/utils/allowedDataTypes";
 
 export async function DELETE(
   request: Request,
   { params }: { params: { type: string, id: string } }
 ) {
+  if (!allowedTypes.includes(params.type)) {
+    return NextResponse.json({ message: "Invalid type" }, { status: 400 });
+  }
+
   const filePath = path.join("data", `${params.type}.json`);
   const data = fs.readFileSync(filePath, "utf8");
   let items: DataObject[] = JSON.parse(data);

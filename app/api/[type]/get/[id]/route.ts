@@ -3,8 +3,13 @@ import path from "path";
 import { NextResponse } from "next/server";
 import DataObject from "@/utils/structures/DataObject";
 import Session from "@/utils/structures/Session";
+import { allowedTypes } from "@/utils/allowedDataTypes";
 
 export async function GET(_request: Request, { params }: { params: { type: string, id: string } }) {
+  if (!allowedTypes.includes(params.type)) {
+    return NextResponse.json({ message: "Invalid type" }, { status: 400 });
+  }
+
   const itemsFilePath = path.join(process.cwd(), "data", `${params.type}.json`);
   const itemsData = fs.readFileSync(itemsFilePath, "utf8");
   const items: DataObject[] = JSON.parse(itemsData);
