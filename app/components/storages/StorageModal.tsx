@@ -36,7 +36,7 @@ export default function StorageModal(props: { item: Storage }) {
 
   return (
     <GenericModal
-      dataType="storages"
+      dataType="storage"
       item={props.item}
       properties={modalProps}
       updateData={(storage) => ({

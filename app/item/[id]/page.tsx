@@ -17,7 +17,7 @@ export default function ItemPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const loadItem = async () => {
       setLoading(true);
-      const response = await fetch(`/api/items/get/${params.id}`);
+      const response = await fetch(`/api/item/get/${params.id}`);
       const loadedItem: Item = (await response.json()).item;
       setItem(loadedItem);
       setLoading(false);

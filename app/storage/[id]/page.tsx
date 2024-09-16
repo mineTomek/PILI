@@ -17,7 +17,7 @@ export default function ItemPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const loadStorage = async () => {
       setLoading(true);
-      const response = await fetch(`/api/storages/get/${params.id}`);
+      const response = await fetch(`/api/storage/get/${params.id}`);
       const loadedStorage: Storage = (await response.json()).item;
       setStorage(loadedStorage);
       setLoading(false);

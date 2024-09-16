@@ -37,7 +37,7 @@ export default function ItemModal(props: { item: Item }) {
   
   return (
     <GenericModal
-      dataType="items"
+      dataType="item"
       item={props.item}
       properties={modalProps}
       updateData={(item) => ({

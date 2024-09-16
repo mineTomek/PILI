@@ -7,7 +7,7 @@ export default function StorageList() {
   const router = useRouter();
   return (
     <GenericList<Storage>
-      dataType="storages"
+      dataType="storage"
       defaultNewItem={{ name: "Unnamed" }}
       columns={[
         { name: "Name", accessor: (storage) => storage.name },
@@ -19,7 +19,7 @@ export default function StorageList() {
         {
           icon: faTrashCan,
           action: async (storage) => {
-            const response = await fetch(`/api/storages/delete/${storage.id}`, {
+            const response = await fetch(`/api/storage/delete/${storage.id}`, {
               method: "DELETE",
             });
 
@@ -39,7 +39,7 @@ export default function StorageList() {
               room_id: storage.room_id,
               surfacePosition: storage.surfacePosition,
             };
-            const response = await fetch("/api/storages/add", {
+            const response = await fetch("/api/storage/add", {
               method: "POST",
               body: JSON.stringify(clonedStorage),
               headers: { "Content-Type": "application/json" },

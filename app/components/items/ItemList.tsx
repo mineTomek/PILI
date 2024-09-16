@@ -7,7 +7,7 @@ export default function ItemList() {
   const router = useRouter();
   return (
     <GenericList<Item>
-      dataType="items"
+      dataType="item"
       defaultNewItem={{ name: "Unnamed" }}
       columns={[
         { name: "Name", accessor: (item) => item.name },
@@ -25,7 +25,7 @@ export default function ItemList() {
         {
           icon: faTrashCan,
           action: async (item) => {
-            const response = await fetch(`/api/items/delete/${item.id}`, {
+            const response = await fetch(`/api/item/delete/${item.id}`, {
               method: "DELETE",
             });
 
@@ -43,7 +43,7 @@ export default function ItemList() {
               storage_id: item.storage_id,
               description: item.description,
             };
-            const response = await fetch("/api/items/add", {
+            const response = await fetch("/api/item/add", {
               method: "POST",
               body: JSON.stringify(clonedItem),
               headers: { "Content-Type": "application/json" },
