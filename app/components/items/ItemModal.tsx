@@ -23,7 +23,7 @@ export default function ItemModal(props: { item: Item }) {
     },
     {
       name: "description",
-      type: "text",
+      type: "textarea",
       accessor: (item) => item.description,
     }
   ];
