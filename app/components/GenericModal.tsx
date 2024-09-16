@@ -5,6 +5,7 @@ import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCancel,
+  faChevronDown,
   faEdit,
   faSave,
   faTrashCan,
@@ -32,12 +33,16 @@ export default function GenericModal<T extends DataObject>(props: {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [details, setDetails] = useState(false);
+
   const router = useRouter();
 
   const [item, setItem] = useState<T>(props.item);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
 
@@ -151,20 +156,22 @@ export default function GenericModal<T extends DataObject>(props: {
         </>
       )}
 
-      <span className="text-slate-400 text-sm font-light">
-        Item ID: {item.id}
-      </span>
-      <span className="text-slate-400 text-sm font-light">
-        Author ID: {item.author_id}
-      </span>
-      <span className="text-slate-400 text-sm font-light">
-        Author Session Name: {item.author_session_name}
-      </span>
-      {item.creation_time && (
-        <span className="text-slate-400 text-sm font-light">
-          Creation Time: {new Date(item.creation_time).toISOString()}
-        </span>
-      )}
+      <p className="mt-4" onClick={() => setDetails((prev) => !prev)}>
+        Details <FontAwesomeIcon icon={faChevronDown} className={mergeCss("transition-transform", details && "rotate-180")} />
+      </p>
+      <div className={details ? "block" : "hidden"}>
+        <p className="text-slate-400 text-sm font-light">Item ID: {item.id}</p>
+        <p className="text-slate-400 text-sm font-light">
+          Author ID: {item.author_id}
+        </p>
+        <p className="text-slate-400 text-sm font-light">
+          Author Session Name: {item.author_session_name}
+        </p>
+        <p className="text-slate-400 text-sm font-light">
+          Creation Time:{" "}
+          {item.creation_time && new Date(item.creation_time).toISOString()}
+        </p>
+      </div>
 
       <div className="absolute top-2 right-2 flex gap-2">
         {editMode && (
