@@ -39,6 +39,8 @@ export async function POST(request: NextRequest, { params }: { params: { type: s
     newItem.id = uuid();
   }
 
+  newItem.creation_time = new Date().getTime();
+
   const existingItem = items.find((item) => item.id === newItem.id);
   if (existingItem) {
     return NextResponse.json({

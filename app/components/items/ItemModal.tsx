@@ -105,6 +105,11 @@ export default function ItemModal(props: { item: Item }) {
       <span className="text-slate-400 text-sm font-light">
         Author Session Name: {item.author_session_name}
       </span>
+      {item.creation_time && (
+        <span className="text-slate-400 text-sm font-light">
+          Creation Time: {new Date(item.creation_time).toISOString()}
+        </span>
+      )}
 
       <div className="absolute top-2 right-2 flex gap-2">
         {editMode && (
