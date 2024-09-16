@@ -20,6 +20,7 @@ export default function ItemModal(props: { item: Item }) {
       name: "category",
       type: "text",
       accessor: (item) => item.category,
+      placeholder: "Category Name..."
     },
     {
       name: "description",
@@ -30,6 +31,7 @@ export default function ItemModal(props: { item: Item }) {
       name: "storage_id",
       type: "text", // TODO: Something more specific here
       accessor: (item) => item.storage_id,
+      placeholder: "Storage ID...",
     },
   ];
   
