@@ -16,10 +16,11 @@ import { mergeCss } from "@/utils/mergeCss";
 export type EditableItemProperty<T> = {
   name: string;
   placeholder?: string;
-  type: "text" | "textarea" | "number";
+  type: "text" | "textarea" | "number" | "dropdown";
   style?: string;
   accessor: (item: T) => string | undefined;
   header?: boolean;
+  dropdownOptions?: { value: string; name: string }[];
 };
 
 export default function GenericModal<T extends DataObject>(props: {
@@ -36,7 +37,7 @@ export default function GenericModal<T extends DataObject>(props: {
   const [item, setItem] = useState<T>(props.item);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
@@ -69,44 +70,72 @@ export default function GenericModal<T extends DataObject>(props: {
           {props.properties.map((prop) => {
             console.log(prop);
 
-            return prop.type === "textarea" ? (
-              <textarea
-                key={"editable_" + prop.name}
-                name={prop.name}
-                className={mergeCss(
-                  "w-max bg-transparent",
-                  prop.header && "font-bold",
-                  prop.style
-                )}
-                onChange={handleChange}
-                defaultValue={prop.accessor(item)}
-                placeholder={
-                  prop.placeholder ??
-                  `${prop.name[0].toUpperCase()}${prop.name
-                    .slice(1)
-                    .toLowerCase()}...`
-                }
-              />
-            ) : (
-              <input
-                key={"editable_" + prop.name}
-                type={prop.type}
-                name={prop.name}
-                className={mergeCss(
-                  "w-max bg-transparent",
-                  prop.header && "font-bold",
-                  prop.style
-                )}
-                onChange={handleChange}
-                defaultValue={prop.accessor(item)}
-                placeholder={
-                  prop.placeholder ??
-                  `${prop.name[0].toUpperCase()}${prop.name
-                    .slice(1)
-                    .toLowerCase()}...`
-                }
-              />
-            );
+            switch (prop.type) {
+              case "textarea":
+                return (
+                  <textarea
+                    key={"editable_" + prop.name}
+                    name={prop.name}
+                    className={mergeCss(
+                      "w-max bg-transparent",
+                      prop.header && "font-bold",
+                      prop.style
+                    )}
+                    onChange={handleChange}
+                    defaultValue={prop.accessor(item)}
+                    placeholder={
+                      prop.placeholder ??
+                      `${prop.name[0].toUpperCase()}${prop.name
+                        .slice(1)
+                        .toLowerCase()}...`
+                    }
+                  />
+                );
+              case "dropdown":
+                return (
+                  <select
+                    key={"editable_" + prop.name}
+                    name={prop.name}
+                    className={mergeCss(
+                      "w-max .appearance-none px-2 rounded-full bg-transparent",
+                      prop.header && "font-bold",
+                      prop.style
+                    )}
+                    onChange={handleChange}
+                  >
+                    {prop.dropdownOptions?.map((option) => (
+                      <option
+                        key={`${prop.name}-option-${option.value}`}
+                        value={option.value}
+                      >
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                );
+
+              default:
+                return (
+                  <input
+                    key={"editable_" + prop.name}
+                    type={prop.type}
+                    name={prop.name}
+                    className={mergeCss(
+                      "w-max bg-transparent",
+                      prop.header && "font-bold",
+                      prop.style
+                    )}
+                    onChange={handleChange}
+                    defaultValue={prop.accessor(item)}
+                    placeholder={
+                      prop.placeholder ??
+                      `${prop.name[0].toUpperCase()}${prop.name
+                        .slice(1)
+                        .toLowerCase()}...`
+                    }
+                  />
+                );
+            }
           })}
         </>
       ) : (

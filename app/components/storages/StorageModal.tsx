@@ -18,8 +18,14 @@ export default function StorageModal(props: { item: Storage }) {
     },
     {
       name: "type",
-      type: "text", // "choice" when available
+      type: "dropdown",
       accessor: (storage) => storage.type,
+      dropdownOptions: [
+        { value: "desk", name: "Desk" },
+        { value: "shelf", name: "Shelf" },
+        { value: "drawer", name: "Drawer" },
+        { value: "other", name: "Other" },
+      ],
     },
     {
       name: "group",
