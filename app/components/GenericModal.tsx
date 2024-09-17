@@ -73,8 +73,6 @@ export default function GenericModal<T extends DataObject>(props: {
       {editMode ? (
         <>
           {props.properties.map((prop) => {
-            console.log(prop);
-
             switch (prop.type) {
               case "textarea":
                 return (
