@@ -105,6 +105,7 @@ export default function GenericModal<T extends DataObject>(props: {
                       prop.style
                     )}
                     onChange={handleChange}
+                    defaultValue={prop.accessor(item)}
                   >
                     {prop.dropdownOptions?.map((option) => (
                       <option
