@@ -56,6 +56,7 @@ export default function ItemModal(props: {
         name: processInput(item.name) ?? "Unnamed",
         category: processInput(item.category),
         description: processInput(item.description),
+        storage_id: item.storage_id
       })}
     />
   );
