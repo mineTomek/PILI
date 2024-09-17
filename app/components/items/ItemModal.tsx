@@ -1,9 +1,13 @@
 "use client";
 
 import Item from "@/utils/structures/Item";
+import Storage from "@/utils/structures/Storage";
 import GenericModal, { EditableItemProperty } from "../GenericModal";
 
-export default function ItemModal(props: { item: Item }) {
+export default function ItemModal(props: {
+  item: Item;
+  storageList: Storage[];
+}) {
   const processInput = (value: string | undefined): string | undefined => {
     const trimmedValue = value?.trim();
     return trimmedValue?.length ? trimmedValue : undefined;
@@ -20,7 +24,7 @@ export default function ItemModal(props: { item: Item }) {
       name: "category",
       type: "text",
       accessor: (item) => item.category,
-      placeholder: "Category Name..."
+      placeholder: "Category Name...",
     },
     {
       name: "description",
@@ -29,12 +33,20 @@ export default function ItemModal(props: { item: Item }) {
     },
     {
       name: "storage_id",
-      type: "text", // TODO: Something more specific here
+      type: "dropdown",
       accessor: (item) => item.storage_id,
       placeholder: "Storage ID...",
+      dropdownOptions: [
+        { value: undefined, name: "None" },
+        ...props.storageList
+          .filter((item) => item.id)
+          .map((item) => {
+            return { value: item.id!, name: item.name };
+          }),
+      ],
     },
   ];
-  
+
   return (
     <GenericModal
       dataType="item"
@@ -43,7 +55,7 @@ export default function ItemModal(props: { item: Item }) {
       updateData={(item) => ({
         name: processInput(item.name) ?? "Unnamed",
         category: processInput(item.category),
-        description: processInput(item.description)
+        description: processInput(item.description),
       })}
     />
   );
