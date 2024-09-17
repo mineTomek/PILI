@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { mergeCss } from "@/utils/mergeCss";
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={mergeCss(inter.className, "max-w-[60rem] mx-auto")}>{children}</body>
     </html>
   );
 }
