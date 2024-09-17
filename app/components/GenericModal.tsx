@@ -21,7 +21,7 @@ export type EditableItemProperty<T> = {
   style?: string;
   accessor: (item: T) => string | undefined;
   header?: boolean;
-  dropdownOptions?: { value: string; name: string }[];
+  dropdownOptions?: { value: string | number | undefined; name: string }[];
 };
 
 export default function GenericModal<T extends DataObject>(props: {
