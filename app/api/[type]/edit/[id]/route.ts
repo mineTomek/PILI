@@ -34,9 +34,6 @@ export async function PATCH(
 
   fs.writeFileSync(filePath, JSON.stringify(items, null, 2), "utf8");
 
-//   // Artificial delay
-//   await new Promise((resolve) => setTimeout(resolve, 2000));
-
   return NextResponse.json({
     message: "Object updated successfully",
     updatedItem,
