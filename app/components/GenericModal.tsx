@@ -69,7 +69,7 @@ export default function GenericModal<T extends DataObject>(props: {
   };
 
   return (
-    <div className="flex flex-col gap-2 relative p-3 size-full m-3 rounded-xl shadow-md bg-slate-100">
+    <div className="flex flex-col gap-3 relative p-3 size-full m-3 rounded-xl shadow-md bg-slate-100">
       {editMode ? (
         <>
           {props.properties.map((prop) => {
@@ -81,7 +81,7 @@ export default function GenericModal<T extends DataObject>(props: {
                   <textarea
                     name={prop.name}
                     className={mergeCss(
-                      "w-max bg-transparent",
+                      "w-max bg-transparent rounded-xl px-3",
                       prop.header && "font-bold",
                       prop.style
                     )}
@@ -98,25 +98,31 @@ export default function GenericModal<T extends DataObject>(props: {
                 break;
               case "dropdown":
                 input = (
-                  <select
-                    name={prop.name}
-                    className={mergeCss(
-                      "w-max .appearance-none px-2 rounded-full bg-transparent",
-                      prop.header && "font-bold",
-                      prop.style
-                    )}
-                    onChange={handleChange}
-                    defaultValue={prop.accessor(item)}
-                  >
-                    {prop.dropdownOptions?.map((option) => (
-                      <option
-                        key={`${prop.name}-option-${option.value}`}
-                        value={option.value}
-                      >
-                        {option.name}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="relative w-max .transform .-translate-x-3">
+                    <select
+                      name={prop.name}
+                      className={mergeCss(
+                        "w-max px-3 rounded-xl appearance-none relative bg-transparent pr-8",
+                        prop.header && "font-bold",
+                        prop.style
+                      )}
+                      onChange={handleChange}
+                      defaultValue={prop.accessor(item)}
+                    >
+                      {prop.dropdownOptions?.map((option) => (
+                        <option
+                          key={`${prop.name}-option-${option.value}`}
+                          value={option.value}
+                        >
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    />
+                  </div>
                 );
                 break;
               default:
@@ -125,7 +131,7 @@ export default function GenericModal<T extends DataObject>(props: {
                     type={prop.type}
                     name={prop.name}
                     className={mergeCss(
-                      "w-max bg-transparent",
+                      "w-max bg-transparent rounded-xl px-3",
                       prop.header && "font-bold",
                       prop.style
                     )}
@@ -159,7 +165,13 @@ export default function GenericModal<T extends DataObject>(props: {
               <p className="text-slate-500 text-xs font-light tracking-wide">
                 {prop.name.toUpperCase().replaceAll("_", " ")}
               </p>
-              <p className={mergeCss(prop.header && "font-bold", prop.style)}>
+              <p
+                className={mergeCss(
+                  "px-3",
+                  prop.header && "font-bold",
+                  prop.style
+                )}
+              >
                 {prop.accessor(item)}
               </p>
             </div>
