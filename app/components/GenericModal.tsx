@@ -69,15 +69,16 @@ export default function GenericModal<T extends DataObject>(props: {
   };
 
   return (
-    <div className="flex flex-col relative p-3 size-full m-3 rounded-xl shadow-md bg-slate-100">
+    <div className="flex flex-col gap-2 relative p-3 size-full m-3 rounded-xl shadow-md bg-slate-100">
       {editMode ? (
         <>
           {props.properties.map((prop) => {
+            let input: JSX.Element | undefined = undefined;
+
             switch (prop.type) {
               case "textarea":
-                return (
+                input = (
                   <textarea
-                    key={"editable_" + prop.name}
                     name={prop.name}
                     className={mergeCss(
                       "w-max bg-transparent",
@@ -94,10 +95,10 @@ export default function GenericModal<T extends DataObject>(props: {
                     }
                   />
                 );
+                break;
               case "dropdown":
-                return (
+                input = (
                   <select
-                    key={"editable_" + prop.name}
                     name={prop.name}
                     className={mergeCss(
                       "w-max .appearance-none px-2 rounded-full bg-transparent",
@@ -117,11 +118,10 @@ export default function GenericModal<T extends DataObject>(props: {
                     ))}
                   </select>
                 );
-
+                break;
               default:
-                return (
+                input = (
                   <input
-                    key={"editable_" + prop.name}
                     type={prop.type}
                     name={prop.name}
                     className={mergeCss(
@@ -139,24 +139,40 @@ export default function GenericModal<T extends DataObject>(props: {
                     }
                   />
                 );
+                break;
             }
+
+            return (
+              <div key={"editable_" + prop.name}>
+                <p className="text-slate-500 text-xs font-light tracking-wide">
+                  {prop.name.toUpperCase().replaceAll("_", " ")}
+                </p>
+                {input}
+              </div>
+            );
           })}
         </>
       ) : (
         <>
           {props.properties.map((prop) => (
-            <p
-              key={prop.name}
-              className={mergeCss(prop.header && "font-bold", prop.style)}
-            >
-              {prop.accessor(item)}
-            </p>
+            <div key={prop.name}>
+              <p className="text-slate-500 text-xs font-light tracking-wide">
+                {prop.name.toUpperCase().replaceAll("_", " ")}
+              </p>
+              <p className={mergeCss(prop.header && "font-bold", prop.style)}>
+                {prop.accessor(item)}
+              </p>
+            </div>
           ))}
         </>
       )}
 
       <p className="mt-4" onClick={() => setDetails((prev) => !prev)}>
-        Details <FontAwesomeIcon icon={faChevronDown} className={mergeCss("transition-transform", details && "rotate-180")} />
+        Details{" "}
+        <FontAwesomeIcon
+          icon={faChevronDown}
+          className={mergeCss("transition-transform", details && "rotate-180")}
+        />
       </p>
       <div className={details ? "block" : "hidden"}>
         <p className="text-slate-400 text-sm font-light">Item ID: {item.id}</p>
