@@ -19,12 +19,12 @@ export default function TableList<T>(props: {
   data: T[];
   emptyMessage?: string;
   actions: Action<T>[];
-  sortingFn?: ((a: T, b: T) => number);
+  sortingFn?: (a: T, b: T) => number;
 }) {
   return (
     <table className={"w-full mb-6"}>
       <thead>
-        <tr className="divide-x divide-slate-100">
+        <tr className="divide-x divide-zinc-100 dark:divide-zinc-700">
           {props.columns.map((column) => (
             <th key={`header-${column.name}`} className="p-2 border-b">
               {column.name}
@@ -37,7 +37,7 @@ export default function TableList<T>(props: {
         {props.data.sort(props.sortingFn).map((obj) => (
           <tr
             key={props.keyAccessor(obj)}
-            className="even:bg-slate-50 hover:bg-slate-100 transition-colors divide-x divide-slate-100"
+            className="even:bg-zinc-50 hover:bg-zinc-100 transition-colors divide-x divide-zinc-100 dark:even:bg-zinc-950 dark:hover:bg-zinc-800 dark:divide-zinc-700"
           >
             {props.columns.map((column) => (
               <td

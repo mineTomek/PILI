@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={mergeCss(inter.className, "max-w-[60rem] mx-auto")}>{children}</body>
+      <body className={mergeCss(inter.className, "max-w-[60rem] mx-auto bg-white dark:bg-zinc-900 text-black dark:text-zinc-100")}>{children}</body>
     </html>
   );
 }

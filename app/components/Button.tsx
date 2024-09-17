@@ -13,7 +13,7 @@ export default function Button(props: {
   return (
     <button
       className={mergeCss(
-        "p-3 rounded-lg shadow-sm disabled:text-slate-700 bg-slate-300 disabled:bg-slate-200",
+        "p-3 rounded-lg shadow-sm disabled:text-zinc-700 dark:disabled:text-zinc-500 bg-zinc-300 dark:bg-zinc-700 disabled:bg-zinc-200 dark:disabled:bg-zinc-800",
         props.className
       )}
       disabled={props.disabled}

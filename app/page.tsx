@@ -13,25 +13,25 @@ export default function Home() {
     <main>
       <Navbar />
       <div className="flex flex-col gap-6 justify-center items-center mt-12 h-[calc(100dvh-3rem)] px-10">
-        <div className="bg-slate-300 p-3 rounded-[20px] flex gap-3 shadow-md">
-          <Button className="bg-white" onClick={() => setCurrentView("item")}>
+        <div className="bg-zinc-300 dark:bg-zinc-700 p-3 rounded-[20px] flex gap-3 shadow-md">
+          <Button className="bg-white dark:bg-zinc-600 dark:text-zinc-200" onClick={() => setCurrentView("item")}>
             Items
           </Button>
           <Button
-            className="bg-white"
+            className="bg-white dark:bg-zinc-600 dark:text-zinc-200"
             onClick={() => setCurrentView("storage")}
           >
             Storages
           </Button>
           <Button
-            className="bg-white"
+            className="bg-white dark:bg-zinc-600 dark:text-zinc-200"
             onClick={() => setCurrentView("room")}
             disabled
           >
             Rooms
           </Button>
           <Button
-            className="bg-white"
+            className="bg-white dark:bg-zinc-600 dark:text-zinc-200"
             onClick={() => setCurrentView("house")}
             disabled
           >
