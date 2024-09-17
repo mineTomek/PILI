@@ -69,7 +69,7 @@ export default function GenericModal<T extends DataObject>(props: {
   };
 
   return (
-    <div className="flex flex-col gap-3 relative p-3 size-full m-3 rounded-xl shadow-md bg-slate-100">
+    <div className="flex flex-col gap-3 relative p-3 size-full m-3 rounded-xl shadow-md bg-zinc-100 dark:bg-zinc-800">
       {editMode ? (
         <>
           {props.properties.map((prop) => {
@@ -150,7 +150,7 @@ export default function GenericModal<T extends DataObject>(props: {
 
             return (
               <div key={"editable_" + prop.name}>
-                <p className="text-slate-500 text-xs font-light tracking-wide">
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs font-light tracking-wide">
                   {prop.name.toUpperCase().replaceAll("_", " ")}
                 </p>
                 {input}
@@ -162,7 +162,7 @@ export default function GenericModal<T extends DataObject>(props: {
         <>
           {props.properties.map((prop) => (
             <div key={prop.name}>
-              <p className="text-slate-500 text-xs font-light tracking-wide">
+              <p className="text-zinc-500 dark:text-zinc-400 text-xs font-light tracking-wide">
                 {prop.name.toUpperCase().replaceAll("_", " ")}
               </p>
               <p
@@ -187,14 +187,14 @@ export default function GenericModal<T extends DataObject>(props: {
         />
       </p>
       <div className={details ? "block" : "hidden"}>
-        <p className="text-slate-400 text-sm font-light">Item ID: {item.id}</p>
-        <p className="text-slate-400 text-sm font-light">
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">Item ID: {item.id}</p>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
           Author ID: {item.author_id}
         </p>
-        <p className="text-slate-400 text-sm font-light">
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
           Author Session Name: {item.author_session_name}
         </p>
-        <p className="text-slate-400 text-sm font-light">
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
           Creation Time:{" "}
           {item.creation_time && new Date(item.creation_time).toISOString()}
         </p>
