@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import TableList, { Action, TableColumn } from "./TableList";
-import Loading from "./Loading";
 import Button from "./Button";
 
 export default function GenericList<T>(props: {
@@ -26,10 +25,6 @@ export default function GenericList<T>(props: {
     loadData();
   }, [loadData]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="w-full flex flex-col items-center">
       <TableList
@@ -38,10 +33,13 @@ export default function GenericList<T>(props: {
         data={data}
         actions={props.actions(loadData)}
         sortingFn={props.sortingFn}
+        style={(!loading && data.length !== 0) ? "mb-6" : undefined}
       />
 
-      {data.length === 0 && (
-        <div className="p-2 flex justify-center mb-6">No Data Found</div>
+      {loading && <p className="mx-auto mb-6 mt-4">Loading...</p>}
+
+      {(data.length === 0 && !loading) && (
+        <div className="flex justify-center mb-6 mt-4">No Data Found</div>
       )}
 
       <Button
