@@ -5,6 +5,8 @@ import ItemList from "./components/items/ItemList";
 import Navbar from "./components/Navbar";
 import Button from "./components/Button";
 import StorageList from "./components/storages/StorageList";
+import RoomList from "./components/rooms/RoomList";
+import HouseList from "./components/house/HouseList";
 
 export default function Home() {
   const [currentView, setCurrentView] = useState("item");
@@ -26,14 +28,12 @@ export default function Home() {
           <Button
             className="bg-white dark:bg-zinc-600 dark:text-zinc-200"
             onClick={() => setCurrentView("room")}
-            disabled
           >
             Rooms
           </Button>
           <Button
             className="bg-white dark:bg-zinc-600 dark:text-zinc-200"
             onClick={() => setCurrentView("house")}
-            disabled
           >
             Houses
           </Button>
@@ -41,6 +41,8 @@ export default function Home() {
 
         {currentView === "item" && <ItemList />}
         {currentView === "storage" && <StorageList />}
+        {currentView === "room" && <RoomList />}
+        {currentView === "house" && <HouseList />}
       </div>
     </main>
   );

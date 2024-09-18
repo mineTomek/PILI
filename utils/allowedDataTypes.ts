@@ -1,1 +1,1 @@
-export const allowedTypes = ['item', 'storage']
+export const allowedTypes = ['item', 'storage', 'room', 'house']

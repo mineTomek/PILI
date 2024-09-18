@@ -1,40 +1,40 @@
 "use client";
 
 import Button from "@/app/components/Button";
-import StorageModal from "@/app/components/storages/StorageModal";
 import Loading from "@/app/components/Loading";
-import Storage from "@/utils/structures/Storage";
+import RoomModal from "@/app/components/rooms/RoomModal";
+import House from "@/utils/structures/House";
+import Room from "@/utils/structures/Room";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import Room from "@/utils/structures/Room";
 
-export default function StoragePage({ params }: { params: { id: string } }) {
-  const [storage, setStorage] = useState<Storage>();
-  const [roomList, setRoomList] = useState<Room[]>();
+export default function RoomPage({ params }: { params: { id: string } }) {
+  const [room, setRoom] = useState<Room>();
+  const [houseList, setHouseList] = useState<House[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
-    const loadStorage = async () => {
+    const loadRoom = async () => {
       setLoading(true);
+      
+      const roomResponse = await fetch(`/api/room/get/${params.id}`);
+      const loadedRoom: Room = (await roomResponse.json()).item;
+      setRoom(loadedRoom);
 
-      const response = await fetch(`/api/storage/get/${params.id}`);
-      const loadedStorage: Storage = (await response.json()).item;
-      setStorage(loadedStorage);
-
-      const roomListResponse = await fetch(`/api/room/get/`);
-      const loadedRoomList: Room[] = (await roomListResponse.json()).items;
-      setRoomList(loadedRoomList);
+      const houseListResponse = await fetch(`/api/house/get/`);
+      const loadedHouseList: House[] = (await houseListResponse.json()).items;
+      setHouseList(loadedHouseList);
 
       setLoading(false);
     };
 
-    loadStorage();
+    loadRoom();
   }, [params.id]);
 
-  if (loading || !storage || !roomList) {
+  if (loading || !room || !houseList) {
     return <Loading />;
   }
 
@@ -47,7 +47,7 @@ export default function StoragePage({ params }: { params: { id: string } }) {
         <FontAwesomeIcon icon={faXmark} />
       </Button>
       <div className="flex items-center min-h-[100dvh] justify-center px-[15%]">
-        <StorageModal item={storage} roomList={roomList} />
+        <RoomModal item={room} houseList={houseList} />
       </div>
     </>
   );

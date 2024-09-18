@@ -2,8 +2,12 @@
 
 import Storage from "@/utils/structures/Storage";
 import GenericModal, { EditableItemProperty } from "../GenericModal";
+import Room from "@/utils/structures/Room";
 
-export default function StorageModal(props: { item: Storage }) {
+export default function StorageModal(props: {
+  item: Storage;
+  roomList: Room[];
+}) {
   const processInput = (value: string | undefined): string | undefined => {
     const trimmedValue = value?.trim();
     return trimmedValue?.length ? trimmedValue : undefined;
@@ -31,6 +35,20 @@ export default function StorageModal(props: { item: Storage }) {
       name: "group",
       type: "text",
       accessor: (storage) => storage.group,
+    },
+    {
+      name: "room_id",
+      type: "dropdown",
+      accessor: (item) => item.room_id,
+      placeholder: "Room ID...",
+      dropdownOptions: [
+        { value: undefined, name: "None" },
+        ...props.roomList
+          .filter((item) => item.id)
+          .map((item) => {
+            return { value: item.id!, name: item.name };
+          }),
+      ],
     },
   ];
 
