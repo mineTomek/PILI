@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 
 export default function ItemPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<Item>();
-  const [storageList, setStorageList] = useState<Storage[]>();
+  const [storageList, setStorageList] = useState<Storage[]>(); // mby initialize with []
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
