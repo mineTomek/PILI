@@ -2,7 +2,6 @@
 
 import Button from "@/app/components/Button";
 import HouseModal from "@/app/components/house/HouseModal";
-import Loading from "@/app/components/Loading";
 import House from "@/utils/structures/House";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,7 +28,7 @@ export default function HousePage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (loading || !house) {
-    return <Loading />;
+    return <p>Loading...</p>;
   }
 
   return (

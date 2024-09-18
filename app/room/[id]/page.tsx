@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/app/components/Button";
-import Loading from "@/app/components/Loading";
 import RoomModal from "@/app/components/rooms/RoomModal";
 import House from "@/utils/structures/House";
 import Room from "@/utils/structures/Room";
@@ -35,7 +34,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (loading || !room || !houseList) {
-    return <Loading />;
+    return <p>Loading...</p>;
   }
 
   return (

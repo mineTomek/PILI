@@ -2,7 +2,6 @@
 
 import Button from "@/app/components/Button";
 import StorageModal from "@/app/components/storages/StorageModal";
-import Loading from "@/app/components/Loading";
 import Storage from "@/utils/structures/Storage";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,7 +34,7 @@ export default function StoragePage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (loading || !storage || !roomList) {
-    return <Loading />;
+    return <p>Loading...</p>;
   }
 
   return (

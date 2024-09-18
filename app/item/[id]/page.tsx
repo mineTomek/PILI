@@ -2,7 +2,6 @@
 
 import Button from "@/app/components/Button";
 import ItemModal from "@/app/components/items/ItemModal";
-import Loading from "@/app/components/Loading";
 import Item from "@/utils/structures/Item";
 import Storage from "@/utils/structures/Storage";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +34,7 @@ export default function ItemPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (loading || !item || !storageList) {
-    return <Loading />;
+    return <p>Loading...</p>;
   }
 
   return (
