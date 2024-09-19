@@ -3,7 +3,7 @@ import GenericList from "../GenericList";
 import Item from "@/utils/structures/Item";
 import { useRouter } from "next/navigation";
 
-export default function ItemList() {
+export default function ItemList(props: { searchQuery?: string; }) {
   const router = useRouter();
   return (
     <GenericList<Item>
@@ -20,6 +20,7 @@ export default function ItemList() {
           accessor: (item) => item.storage_id ?? "No Storage ID",
         },
       ]}
+      searchQuery={props.searchQuery}
       keyAccessor={(item) => item.id!}
       actions={(loadData) => [
         {

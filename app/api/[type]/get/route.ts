@@ -1,11 +1,15 @@
 import fs from "fs";
 import path from "path";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Session from "@/utils/structures/Session";
 import DataObject from "@/utils/structures/DataObject";
 import { allowedTypes } from "@/utils/allowedDataTypes";
+import Fuse, { IFuseOptions } from "fuse.js";
 
-export async function GET(_request: Request, { params }: { params: { type: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { type: string } }
+) {
   if (!allowedTypes.includes(params.type)) {
     return NextResponse.json({ message: "Invalid type" }, { status: 400 });
   }
@@ -26,5 +30,25 @@ export async function GET(_request: Request, { params }: { params: { type: strin
     author_session_name: getSessionName(item)?.name ?? "Unknown ID",
   }));
 
-  return NextResponse.json({ items: itemsWithSessionName });
+  const searchQuery = request.nextUrl.searchParams.get("q");
+
+  if (!searchQuery) {
+    return NextResponse.json({ items: itemsWithSessionName });
+  }
+
+  const fuseOptions: IFuseOptions<DataObject> = {
+    keys: [
+      { name: "name", weight: 0.6 },
+      { name: "author_session_name", weight: 0.4 },
+    ],
+    threshold: 0.3, // Lower threshold = stricter match
+  };
+
+  const fuse = new Fuse(itemsWithSessionName, fuseOptions);
+
+  const result = fuse.search(searchQuery);
+
+  const filteredItems = result.map(({ item }) => item);
+
+  return NextResponse.json({ items: filteredItems });
 }

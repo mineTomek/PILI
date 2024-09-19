@@ -8,18 +8,24 @@ export default function GenericList<T>(props: {
   keyAccessor: (obj: T) => string;
   defaultNewItem: Partial<T>;
   actions: (loadData: () => void) => Action<T>[];
-  sortingFn?: ((a: T, b: T) => number);
+  sortingFn?: (a: T, b: T) => number;
+  searchQuery?: string;
 }) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const loadData = useCallback(async () => {
     setLoading(true);
-    const response = await fetch(`/api/${props.dataType}/get`);
+    const url = props.searchQuery
+      ? `/api/${props.dataType}/get?q=${encodeURIComponent(props.searchQuery)}`
+      : `/api/${props.dataType}/get`;
+    
+    const response = await fetch(url);
+    console.log(response)
     const loadedData: T[] = (await response.json()).items;
     setData(loadedData);
     setLoading(false);
-  }, [props.dataType]);
+  }, [props.dataType, props.searchQuery]);
 
   useEffect(() => {
     loadData();
@@ -33,12 +39,12 @@ export default function GenericList<T>(props: {
         data={data}
         actions={props.actions(loadData)}
         sortingFn={props.sortingFn}
-        style={(!loading && data.length !== 0) ? "mb-6" : undefined}
+        style={!loading && (data ?? []).length !== 0 ? "mb-6" : undefined}
       />
 
       {loading && <p className="mx-auto mb-6 mt-4">Loading...</p>}
 
-      {(data.length === 0 && !loading) && (
+      {(data ?? []).length === 0 && !loading && (
         <div className="flex justify-center mb-6 mt-4">No Data Found</div>
       )}
 
