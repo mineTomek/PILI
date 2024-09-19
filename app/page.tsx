@@ -32,7 +32,7 @@ export default function Home() {
             <FontAwesomeIcon icon={faArrowRightRotate} />
           </Button>
 
-          <div className="bg-zinc-300 dark:bg-zinc-700 p-3 rounded-[20px] flex gap-3 shadow-md .-z-10">
+          <div className="bg-zinc-300 dark:bg-zinc-700 p-3 rounded-[20px] flex gap-3 shadow-md -z-10">
             <div className="relative">
               <div
                 className={mergeCss(
