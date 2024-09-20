@@ -1,12 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import DataObject from "@/utils/structures/DataObject";
 import { allowedTypes } from "@/utils/allowedDataTypes";
+import addHistoryEntry from "@/utils/addHistoryEntry";
+import { v4 as uuid } from "uuid";
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { type: string, id: string } }
+  request: NextRequest,
+  { params }: { params: { type: string; id: string } }
 ) {
   if (!allowedTypes.includes(params.type)) {
     return NextResponse.json({ message: "Invalid type" }, { status: 400 });
@@ -34,8 +36,31 @@ export async function PATCH(
 
   fs.writeFileSync(filePath, JSON.stringify(items, null, 2), "utf8");
 
-  return NextResponse.json({
+  let deviceToken = request.cookies.get("device-token")?.value;
+
+  if (!deviceToken) {
+    deviceToken = uuid();
+  }
+
+  addHistoryEntry(params.type, {
+    id: uuid(),
+    modified_object_id: itemId,
+    author_id: deviceToken,
+    timestamp: Date.now(),
+    state: items[itemIndex],
+    tags: [],
+  });
+
+  const response = NextResponse.json({
     message: "Object updated successfully",
     updatedItem,
   });
+
+  response.cookies.set("device-token", deviceToken, {
+    httpOnly: true,
+    // secure: true, // cookies HTTP addresses with secure=true are not saved
+    maxAge: 60 * 60 * 24 * 365, // 1 year expiration
+  });
+
+  return response;
 }

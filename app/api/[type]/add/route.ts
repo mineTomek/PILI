@@ -4,8 +4,12 @@ import path from "path";
 import DataObject from "@/utils/structures/DataObject";
 import { NextRequest, NextResponse } from "next/server";
 import { allowedTypes } from "@/utils/allowedDataTypes";
+import addHistoryEntry from "@/utils/addHistoryEntry";
 
-export async function POST(request: NextRequest, { params }: { params: { type: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { type: string } }
+) {
   if (!allowedTypes.includes(params.type)) {
     return NextResponse.json({ message: "Invalid type" }, { status: 400 });
   }
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest, { params }: { params: { type: s
     newItem.id = uuid();
   }
 
-  newItem.creation_time = new Date().getTime();
+  newItem.creation_time = Date.now();
 
   const existingItem = items.find((item) => item.id === newItem.id);
   if (existingItem) {
@@ -58,10 +62,20 @@ export async function POST(request: NextRequest, { params }: { params: { type: s
 
   fs.writeFileSync(filePath, JSON.stringify(items, null, 2), "utf8");
 
+  addHistoryEntry(params.type, {
+    id: uuid(),
+    modified_object_id: newItem.id,
+    author_id: deviceToken,
+    timestamp: Date.now(),
+    state: newItem,
+    tags: ["created"],
+  });
+
   const response = NextResponse.json({
     message: "Object added successfully",
     newItem,
   });
+
   response.cookies.set("device-token", deviceToken, {
     httpOnly: true,
     // secure: true, // cookies HTTP addresses with secure=true are not saved
