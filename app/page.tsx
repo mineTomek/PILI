@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightRotate, faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { mergeCss } from "@/utils/mergeCss";
 import SearchBar from "./components/SearchBar";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [currentView, setCurrentView] = useState("item");
