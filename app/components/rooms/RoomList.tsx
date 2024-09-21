@@ -3,10 +3,11 @@ import GenericList from "../GenericList";
 import { useRouter } from "next/navigation";
 import Room from "@/utils/structures/Room";
 
-export default function RoomList() {
+export default function RoomList(props: { refreshKey: number }) {
   const router = useRouter();
   return (
     <GenericList<Room>
+      refreshKey={props.refreshKey}
       dataType="room"
       defaultNewItem={{ name: "Unnamed" }}
       columns={[

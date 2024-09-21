@@ -8,7 +8,11 @@ import StorageList from "./components/storages/StorageList";
 import RoomList from "./components/rooms/RoomList";
 import HouseList from "./components/house/HouseList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightRotate, faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightRotate,
+  faSearch,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { mergeCss } from "@/utils/mergeCss";
 import SearchBar from "./components/SearchBar";
 
@@ -16,18 +20,18 @@ export default function Home() {
   const [currentView, setCurrentView] = useState("item");
   const [searchActive, setSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refreshLists = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   return (
     <main>
       <Navbar />
       <div className="flex flex-col gap-6 justify-center items-center mt-12 .min-h-dvh px-10 -z-10 py-32">
         <div className="flex gap-3">
-          <Button
-            className={mergeCss(
-              "bg-[transparent!important]",
-            )}
-            disabled
-          >
+          <Button className={mergeCss("bg-[transparent!important]")} onClick={refreshLists}>
             <FontAwesomeIcon icon={faArrowRightRotate} />
           </Button>
 
@@ -95,10 +99,10 @@ export default function Home() {
           </Button>
         </div>
 
-        {currentView === "item" && <ItemList searchQuery={searchQuery} />}
-        {currentView === "storage" && <StorageList />}
-        {currentView === "room" && <RoomList />}
-        {currentView === "house" && <HouseList />}
+        {currentView === "item" && <ItemList refreshKey={refreshKey} searchQuery={searchQuery} />}
+        {currentView === "storage" && <StorageList refreshKey={refreshKey} />}
+        {currentView === "room" && <RoomList refreshKey={refreshKey} />}
+        {currentView === "house" && <HouseList refreshKey={refreshKey} />}
       </div>
     </main>
   );

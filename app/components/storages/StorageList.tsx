@@ -3,10 +3,11 @@ import GenericList from "../GenericList";
 import Storage from "@/utils/structures/Storage";
 import { useRouter } from "next/navigation";
 
-export default function StorageList() {
+export default function StorageList(props: { refreshKey: number }) {
   const router = useRouter();
   return (
     <GenericList<Storage>
+      refreshKey={props.refreshKey}
       dataType="storage"
       defaultNewItem={{ name: "Unnamed" }}
       columns={[

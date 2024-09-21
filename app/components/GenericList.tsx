@@ -3,6 +3,7 @@ import TableList, { Action, TableColumn } from "./TableList";
 import Button from "./Button";
 
 export default function GenericList<T>(props: {
+  refreshKey?: number;
   dataType: string;
   columns: TableColumn<T>[];
   keyAccessor: (obj: T) => string;
@@ -19,17 +20,18 @@ export default function GenericList<T>(props: {
     const url = props.searchQuery
       ? `/api/${props.dataType}/get?q=${encodeURIComponent(props.searchQuery)}`
       : `/api/${props.dataType}/get`;
-    
+
     const response = await fetch(url);
-    console.log(response)
+    console.log(response);
     const loadedData: T[] = (await response.json()).items;
     setData(loadedData);
     setLoading(false);
-  }, [props.dataType, props.searchQuery]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.dataType, props.searchQuery, props.refreshKey]);
 
   useEffect(() => {
     loadData();
-  }, [loadData]);
+  }, [loadData, props.refreshKey]);
 
   return (
     <div className="w-full flex flex-col items-center">

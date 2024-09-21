@@ -3,10 +3,14 @@ import GenericList from "../GenericList";
 import Item from "@/utils/structures/Item";
 import { useRouter } from "next/navigation";
 
-export default function ItemList(props: { searchQuery?: string; }) {
+export default function ItemList(props: {
+  refreshKey?: number;
+  searchQuery?: string;
+}) {
   const router = useRouter();
   return (
     <GenericList<Item>
+      refreshKey={props.refreshKey}
       dataType="item"
       defaultNewItem={{ name: "Unnamed" }}
       columns={[
