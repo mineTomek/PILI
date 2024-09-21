@@ -176,22 +176,28 @@ export default function GenericModal<T extends DataObject>(props: {
         </>
       ) : (
         <>
-          {props.properties.map((prop) => (
-            <div key={prop.name}>
-              <p className="text-zinc-500 dark:text-zinc-400 text-xs font-light tracking-wide">
-                {prop.name.toUpperCase().replaceAll("_", " ")}
-              </p>
-              <p
-                className={mergeCss(
-                  "px-3",
-                  prop.header && "font-bold",
-                  prop.style
-                )}
-              >
-                {prop.accessor(item)}
-              </p>
-            </div>
-          ))}
+          {props.properties.map((prop) => {
+            const propValue = prop.accessor(item);
+
+            if (!propValue) return;
+
+            return (
+              <div key={prop.name}>
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs font-light tracking-wide">
+                  {prop.name.toUpperCase().replaceAll("_", " ")}
+                </p>
+                <p
+                  className={mergeCss(
+                    "px-3",
+                    prop.header && "font-bold",
+                    prop.style
+                  )}
+                >
+                  {prop.accessor(item)}
+                </p>
+              </div>
+            );
+          })}
         </>
       )}
 
