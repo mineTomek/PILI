@@ -53,7 +53,7 @@ export default function GenericModal<T extends DataObject>(props: {
         .then((data) => setHistoryEntries(data.entries))
         .catch((error) => console.error("Error fetching history:", error));
     }
-  }, [historyVisible, item.id, props.dataType]);
+  }, [historyVisible, historyEntries, item.id, props.dataType]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -245,8 +245,8 @@ export default function GenericModal<T extends DataObject>(props: {
                       changes.push(
                         <p>
                           <strong>{key.replace(/_/g, " ")}</strong> changed from{" "}
-                          <i>"{previousState[key]}"</i> to{" "}
-                          <i>"{currentState[key]}"</i>
+                          <i>{'"' + previousState[key] + '"'}</i> to{" "}
+                          <i>{'"' + currentState[key] + '"'}</i>
                         </p>
                       );
                     }
@@ -327,6 +327,7 @@ export default function GenericModal<T extends DataObject>(props: {
 
                         return (
                           <FontAwesomeIcon
+                            key={`${tag}-tag-${entry.id}`}
                             icon={icon}
                             className={mergeCss(
                               "w-[1em] p-2 rounded-md shadow-lg",

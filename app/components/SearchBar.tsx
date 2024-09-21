@@ -22,7 +22,7 @@ export default function SearchBar(props: {
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query, props.onSearch]);
+  }, [query, props]);
 
   return (
     <input
