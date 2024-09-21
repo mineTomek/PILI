@@ -49,7 +49,14 @@ export default function GenericModal<T extends DataObject>(props: {
   useEffect(() => {
     if (historyVisible && historyEntries.length === 0) {
       fetch(`/api/${props.dataType}/history/get?item_id=${item.id}`)
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(
+              `Got a non-2xx (${res.status}) response while fetching history`
+            );
+          }
+          return res.json();
+        })
         .then((data) => setHistoryEntries(data.entries))
         .catch((error) => console.error("Error fetching history:", error));
     }
@@ -76,7 +83,15 @@ export default function GenericModal<T extends DataObject>(props: {
       method: "PATCH",
       body: JSON.stringify(updatedData),
     })
-      .then((r) => r.json().then((data) => setItem(data.updatedItem)))
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(
+            `Got a non-2xx (${res.status}) response while saving item`
+          );
+        }
+        return res.json();
+      })
+      .then((data) => setItem(data.updatedItem))
       .catch((error) => console.error("Error saving item:", error))
       .finally(() => {
         setLoading(false);
