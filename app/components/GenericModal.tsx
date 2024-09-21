@@ -36,7 +36,6 @@ export default function GenericModal<T extends DataObject>(props: {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [detailsVisible, setDetailsVisible] = useState(false);
   const [historyVisible, setHistoryVisible] = useState(false);
 
   const [historyEntries, setHistoryEntries] = useState<
@@ -196,28 +195,19 @@ export default function GenericModal<T extends DataObject>(props: {
         </>
       )}
 
-      <p className="mt-4" onClick={() => setDetailsVisible((prev) => !prev)}>
-        Details{" "}
-        <FontAwesomeIcon
-          icon={faChevronDown}
-          className={mergeCss(
-            "transition-transform",
-            detailsVisible && "rotate-180"
-          )}
-        />
-      </p>
-      <div className={detailsVisible ? "block" : "hidden"}>
-        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
-          Item ID: {item.id}
+      <div>
+        <p className="text-zinc-500 dark:text-zinc-400 text-xs font-light tracking-wide">
+          DETAILS
         </p>
-        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
-          Author ID: {item.author_id}
+
+        <p className="px-3">
+          <strong>Item ID:</strong> {item.id}
         </p>
-        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
-          Author Session Name: {item.author_session_name}
+        <p className="px-3">
+          <strong>Author:</strong> {item.author_session_name} ({item.author_id})
         </p>
-        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
-          Creation Time:{" "}
+        <p className="px-3">
+          <strong>Creation Time:</strong>{" "}
           {item.creation_time && new Date(item.creation_time).toISOString()}
         </p>
       </div>
