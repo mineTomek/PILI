@@ -16,11 +16,17 @@ export async function GET(
 
   const filePath = path.join("data", "history", `${params.type}.json`);
   const data = fs.readFileSync(filePath, "utf8");
-  const entries: HistoryEntry<DataObject>[] = JSON.parse(data);
+  let entries: HistoryEntry<DataObject>[] = JSON.parse(data);
 
   const sessionsFilePath = path.join(process.cwd(), "data", "sessions.json");
   const sessionsData = fs.readFileSync(sessionsFilePath, "utf8");
   const sessions: Session[] = JSON.parse(sessionsData);
+
+  const itemId = request.nextUrl.searchParams.get("item_id");
+
+  if (itemId) {
+    entries = entries.filter(entry => (entry.modified_object_id === itemId))
+  }
 
   const getSessionName = (entry: HistoryEntry<DataObject>) =>
     sessions.find((s) => s.id_list.indexOf(entry.author_id!) != -1);
