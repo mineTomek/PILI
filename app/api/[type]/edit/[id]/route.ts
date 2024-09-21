@@ -48,7 +48,7 @@ export async function PATCH(
     author_id: deviceToken,
     timestamp: Date.now(),
     state: items[itemIndex],
-    tags: [],
+    tags: ["edited"],
   });
 
   const response = NextResponse.json({
