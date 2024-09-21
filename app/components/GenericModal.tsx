@@ -322,21 +322,21 @@ export default function GenericModal<T extends DataObject>(props: {
                   >
                     <div className="flex flex-col absolute top-3 left-3 gap-3">
                       {entry.tags.map((tag) => {
-                        let className = "text-yellow-500 bg-yellow-800";
+                        let className = "text-yellow-500 bg-yellow-50 dark:bg-yellow-800";
                         let icon = faTriangleExclamation;
 
                         if (tag === "created") {
-                          className = "text-green-500 bg-green-800";
+                          className = "text-green-500 bg-green-50 dark:bg-green-800";
                           icon = faFolderPlus;
                         }
 
                         if (tag === "edited") {
-                          className = "text-sky-500 bg-sky-800";
+                          className = "text-sky-500 bg-sky-50 dark:bg-sky-800";
                           icon = faFilePen;
                         }
 
                         if (tag === "deleted") {
-                          className = "text-red-500 bg-red-800";
+                          className = "text-red-500 bg-red-50 dark:bg-red-800";
                           icon = faTrashCan;
                         }
 
