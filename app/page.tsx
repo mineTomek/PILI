@@ -29,13 +29,13 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <div className="flex flex-col gap-6 justify-center items-center mt-12 .min-h-dvh px-10 -z-10 py-32">
+      <div className="flex flex-col gap-6 justify-center items-center mt-12 .min-h-dvh px-10 py-32">
         <div className="flex gap-3">
           <Button className={mergeCss("bg-[transparent!important]")} onClick={refreshLists}>
             <FontAwesomeIcon icon={faArrowRightRotate} />
           </Button>
 
-          <div className="bg-zinc-300 dark:bg-zinc-700 p-3 rounded-[20px] flex gap-3 shadow-md -z-10">
+          <div className="bg-zinc-300 dark:bg-zinc-700 p-3 rounded-[20px] flex gap-3 shadow-md">
             <div className="relative">
               <div
                 className={mergeCss(
