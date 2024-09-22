@@ -230,7 +230,7 @@ export default function GenericModal<T extends DataObject>(props: {
         </p>
         <p className="px-3">
           <strong>Creation Time:</strong>{" "}
-          {item.creation_time && new Date(item.creation_time).toISOString()}
+          {item.creation_time && new Date(item.creation_time).toLocaleString()}
         </p>
       </div>
 
