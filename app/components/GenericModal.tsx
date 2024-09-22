@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mergeCss } from "@/utils/mergeCss";
+import toTitleCase from "@/utils/toTitleCase";
 
 export type EditableItemProperty<T> = {
   name: string;
@@ -259,9 +260,9 @@ export default function GenericModal<T extends DataObject>(props: {
                     if (currentState[key] !== previousState[key]) {
                       changes.push(
                         <p>
-                          <strong>{key.replace(/_/g, " ")}</strong> changed from{" "}
-                          <i>{'"' + previousState[key] + '"'}</i> to{" "}
-                          <i>{'"' + currentState[key] + '"'}</i>
+                          <strong>{toTitleCase(key.replace(/_/g, " "))}</strong>{" "}
+                          changed from <i>{'"' + previousState[key] + '"'}</i>{" "}
+                          to <i>{'"' + currentState[key] + '"'}</i>
                         </p>
                       );
                     }
@@ -297,7 +298,7 @@ export default function GenericModal<T extends DataObject>(props: {
                 ).map(([key, value]) => (
                   <div key={key}>
                     <p>
-                      <strong>{key.replace(/_/g, " ")}: </strong>{" "}
+                      <strong>{toTitleCase(key.replace(/_/g, " "))}: </strong>{" "}
                       {String(value)}
                     </p>
                   </div>
